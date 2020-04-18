@@ -1,0 +1,35 @@
+﻿@model IList<Inicial.Models.Produtos>
+    //Chamando a camada model no index - Fortemente tipada
+
+
+@foreach (var produto in Model)
+{
+    <table class="table-hover">
+        <tbody>
+            <tr>
+                <td>@produto.Id</td>
+                @*Link para a pessoa ver o produto*@
+                <td>
+                    @Html.ActionLink(produto.Nome, "Visualiza", new { id = produto.Id });
+                </td>
+                <td>@Html.RouteLink(produto.Nome, "ListaProdutos", new { id = produto.Id })</td> @*utilizando a rota como link*@
+               
+                @*Utilizando o metodo AJAX para uma requisição assicrona*@
+                <td id="quantidade@(produto.Id)">@produto.Quantidade</td> @*deixando claro para o razor que está querendo pegar o id do produto*@
+                <td><a href="#" onclick="decrementa(@produto.Id);">Decrementar</a></td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<script type="text/javascript" src="~/Scripts/jquery"></script>
+<script type="text/javascript">
+    function decrementa(produtoId) {
+        var url = @Url.Action("DecrementaQtde", "Produto"); //url do razor para pegar o metodo DecrementaQtde
+        $.post(url, {id: produtoId}, atualiza)
+    }
+
+    function atualiza(resposta) {
+        $("quantidade" + resposta.id).html(resposta.Quantidade);
+    }
+</script>

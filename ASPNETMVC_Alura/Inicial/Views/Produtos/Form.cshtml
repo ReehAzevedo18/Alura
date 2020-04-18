@@ -1,0 +1,36 @@
+﻿
+        <form action="/Produtos/Adiciona" method="post">
+            @Html.AntiForgeryToken();
+            @Html.ValidationMessage("produto.Invalido"); //validação
+
+
+            <label for="nome">Nome: </label>
+            <input id="nome" name="produto.nome" value="@ViewBag.Produto.Nome" class="form-control"/>
+            @Html.ValidationMessage("produto.nome"); //validação
+
+            <label for="preco">Preço: </label>
+            <input id="preco" name="produto.preco" value="@ViewBag.Produto.Preco" class="form-control"/>
+
+            <label for="quantidade">Quantidade: </label>
+            <input id="quantidade" name="produto.quantidade" value="@ViewBag.Produto.Quantidade" class="form-control"/>
+
+            <label for="descricao">Descrição: </label>
+            <input id="descricao" name="produto.descricao" value="@ViewBag.Produto.Descricao" class="form-control"/>
+
+            <label for="categoria">Categoria: </label>
+            @*<input id="categoria" name="produto.categoria" />*@
+            //mostrando as categorias vindas do banco
+        <select id="categoria" name="produto.categoriaId" class="form-control">
+            @foreach (var categoria in ViewBag.Categorias)
+            {
+            
+                    <option value="@categoria.ID" selected="@categoria.id.Equals(ViewBag.Produto.CategoriaID)">@categoria.nome</option>
+        
+            }
+
+        </select>
+
+            <input type="submit" value="cadastrar" />
+
+
+        </form>
